@@ -1,57 +1,33 @@
-def quickSort(p):
-   quickSortHelper(p,0,len(p)-1)
 
-def quickSortHelper(p,first,last):
-   if first<last:
+p=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+n=int(input()) #Number of floor stops
+init=int(input()) #Initial floor number
 
-       splitpoint = partition(p,first,last)
+l=len(p)
+for i in range(n,l):
+    del(p[l-1])
+    l-=1
 
-       quickSortHelper(p,first,splitpoint-1)
-       quickSortHelper(p,splitpoint+1,last)
-
-
-def partition(p,first,last):
-   pivotvalue = p[first]
-
-   leftmark = first+1
-   rightmark = last
-
-   done = False
-   while not done:
-
-       while leftmark <= rightmark and p[leftmark] <= pivotvalue:
-           leftmark = leftmark + 1
-
-       while p[rightmark] >= pivotvalue and rightmark >= leftmark:
-           rightmark = rightmark -1
-
-       if rightmark < leftmark:
-           done = True
-       else:
-           temp = p[leftmark]
-           p[leftmark] = p[rightmark]
-           p[rightmark] = temp
-
-   temp = p[first]
-   p[first] = p[rightmark]
-   p[rightmark] = temp
-
-
-   return rightmark
-
-
-p=[0,0,0,0,0]
-init=int(input())
-for i,val in enumerate(p):
-    #if(i>=n):break
+for i,val in enumerate(p): #Sequence of floors 
     p[i]=int(input())
-quickSort(p)
+p.sort()
+
 
 for i,val in enumerate(p):
     if(val>init):
         pos=i
         break
-print (pos)
+
+for i,val in enumerate(p):
+    if(val==init):
+        for i,val in enumerate(p):
+            if(i!=l-1 and i>=pos-1):
+                p[i]=p[i+1]
+        del p[l-1]
+        l-=1
+        pos-=1
+        
+print("Going up first")
 print(init)
 for i,val in enumerate(p):
     if(i>=pos):
@@ -60,5 +36,18 @@ for i,val in enumerate(p):
 for i,val in enumerate(p):
     if(i<pos):
         print(val)
-dist=2*(p[4]-init)+init-p[0];
+dist=(p[l-1]-init)+p[l-1]-p[0];
 print(dist);
+
+print("Going down first")
+print(init)
+for i,val in enumerate(p):
+    if(i<=pos):
+        print(val)
+    
+for i,val in enumerate(p):
+    if(i>pos):
+        print(val)
+dist=(init-p[0])+p[l-1]-p[0];
+print(dist);
+
